@@ -1,0 +1,34 @@
+# Smithery configuration for Projuris ADV
+# Schema: https://smithery.ai/docs/build/project-config
+# Remote HTTP MCP — server hosted at https://api.mcp.ai/p_projuris
+
+name: projuris-mcp
+displayName: "Projuris ADV"
+description: >
+  Wrapper da API REST oficial do Projuris ADV (gestão jurídica): processos, pessoas (clientes/partes), tarefas (prazos/compromissos), andamentos, apontamento de horas (timesheet), arquivos (GED), contratos de honorários, assuntos, intimações, atendimentos, financeiro (receitas/despesas) e usuários. Leitura, busca e criação/edição via REST. Autenticação com client_id/secret fornecidos pelo suporte ao contratar a API (planos Premium) + usuário e senha do Projuris ADV. Tools genéricas cobrem os 757 recursos da API.
+
+version: 0.1.0
+license: MIT
+homepage: https://github.com/mcp-dir/projuris-mcp
+repository: https://github.com/mcp-dir/projuris-mcp
+
+tags:
+  - projuris
+  - brazil
+  - med
+  - vertical
+  - read-write
+
+# Remote HTTP MCP — sem startCommand local (servidor já hospedado)
+startCommand:
+  type: http
+  url: https://api.mcp.ai/p_projuris
+
+auth:
+  type: oauth2
+  resourceMetadataUrl: https://api.mcp.ai/p_projuris/.well-known/oauth-protected-resource
+  fallback:
+    type: agent-auth
+    description: >
+      Para clientes sem OAuth 2.1. O agente expõe uma tool authenticate(token).
+      Usuário gera o JWT em https://app.mcp.ai/agent-auth e cola no chat.
